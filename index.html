@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="payment-card">
+            <div class="security-header">
+                <span class="lock-icon">🔒</span>
+                <span class="security-text">Secure and Encrypted 256-bit TLS verification</span>
+            </div>
+
+            <div class="activation-box">
+                <div class="activation-header">
+                    <h2>Activation of your account</h2>
+                    <span class="price">1€</span>
+                </div>
+                <p class="activation-info">Your card will be billed only 1€ to activate your account.</p>
+                
+                <div class="benefits">
+                    <div class="benefit-icons">
+                        <span class="benefit-icon">➕</span>
+                        <span class="benefit-icon">➕</span>
+                    </div>
+                    <p class="benefit-text">Unlimited access to movies, sports, games, audiobooks and more.</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="card-name">Name on the card</label>
+                    <div class="name-inputs">
+                        <input type="text" id="first-name" placeholder="First name">
+                        <input type="text" id="last-name" placeholder="Last name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-number">Card number</label>
+                    <div class="card-number-container">
+                        <input type="text" id="card-number" placeholder="Your card number">
+                        <div class="card-icons">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-aj1pUS9bJjz4STyUYcjs8AYXQWw4YM.png" alt="Visa" class="card-icon visa">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-aj1pUS9bJjz4STyUYcjs8AYXQWw4YM.png" alt="Mastercard" class="card-icon mastercard">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group expiry">
+                        <label for="expiry-month">Expiry month</label>
+                        <input type="text" id="expiry-month" placeholder="MM">
+                    </div>
+                    <div class="form-group expiry">
+                        <label for="expiry-year">Expiry year</label>
+                        <input type="text" id="expiry-year" placeholder="YYYY">
+                    </div>
+                    <div class="form-group security">
+                        <label for="security-code">Security code</label>
+                        <div class="security-code-container">
+                            <input type="text" id="security-code" placeholder="3-4 digits">
+                            <span class="info-icon">ℹ️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subscription-option">
+                    <input type="checkbox" id="subscription" checked>
+                    <label for="subscription" class="subscription-text">
+                        Yes, I want an additional music concert bundle subscription with a 14 days trial for 0EUR, which automatically continues into a recurring monthly subscription of 4.95EUR/month, unless stopped during the trial period. I accept the terms and conditions of the music concert bundle.
+                    </label>
+                </div>
+
+                <div class="terms-agreement">
+                    <p>By clicking on continue you agree to the <a href="#" class="terms-link">terms & conditions</a>, <a href="#" class="privacy-link">privacy policy</a> and possible below charges.</p>
+                </div>
+
+                <button type="submit" class="continue-btn">
+                    CONTINUE
+                    <span class="arrow">›</span>
+                </button>
+            </form>
+
+            <div class="disclaimer">
+                <p>Membership gives you access to our full catalog of premium content, for only 1€ until the 3-day trial period ends. If you have not cancelled by then, your membership will automatically convert to a paid membership and you will then be charged 39.95€ every month unless cancelled. All your billing and contact information will be available in the member's area and in your welcome email.</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
