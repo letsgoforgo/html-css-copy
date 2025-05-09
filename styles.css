@@ -224,7 +224,8 @@ body {
     content: '';
     position: absolute;
     bottom: -8px;
-    left: 15px;
+    left: 50%; /* Center the arrow horizontally */
+    transform: translateX(-50%); /* Ensure perfect centering */
     width: 0;
     height: 0;
     border-left: 8px solid transparent;
@@ -239,6 +240,7 @@ body {
 
 .name-inputs {
     display: flex;
+    gap: 0; /* Changed gap to 0 between first name and last name */
 }
 
 .input-wrapper {
@@ -246,9 +248,18 @@ body {
     flex: 1;
 }
 
+/* First name input wrapper - first child */
+.input-wrapper:first-child .name-input {
+    border-radius: 4px 0 0 4px; /* Remove right border radius */
+}
+
+/* Last name input wrapper - last child */
+.input-wrapper:last-child .name-input {
+    border-radius: 0 4px 4px 0; /* Remove left border radius */
+}
+
 .name-input {
     border: 1px solid #ddd; /* Decreased border width in normal state */
-    border-radius: 4px;
     width: 100%;
     height: 50px; /* Increased height to 50px */
     padding: 1px 10px 0px;
@@ -470,5 +481,15 @@ input:focus, select:focus {
     
     .name-inputs {
         flex-direction: column;
+        gap: 20px;
+    }
+    
+    /* Reset border radius for mobile view */
+    .input-wrapper:first-child .name-input {
+        border-radius: 4px;
+    }
+    
+    .input-wrapper:last-child .name-input {
+        border-radius: 4px;
     }
 }
