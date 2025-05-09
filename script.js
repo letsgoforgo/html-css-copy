@@ -336,47 +336,47 @@ document.addEventListener('DOMContentLoaded', function() {
         const expiryYearValid = expiryYearInput.value !== '';
         
         // Show individual field errors
-        if (!firstNameValid) {
-            firstNameInput.classList.add('error');
-            firstNameInput.classList.remove('valid');
-            $(firstNameError).fadeIn(300);
-            hideErrorMessageAfterDelay(firstNameError);
-        }
+        // if (!firstNameValid) {
+        //     firstNameInput.classList.add('error');
+        //     firstNameInput.classList.remove('valid');
+        //     $(firstNameError).fadeIn(300);
+        //     hideErrorMessageAfterDelay(firstNameError);
+        // }
         
-        if (!lastNameValid) {
-            lastNameInput.classList.add('error');
-            lastNameInput.classList.remove('valid');
-            $(lastNameError).fadeIn(300);
-            hideErrorMessageAfterDelay(lastNameError);
-        }
+        // if (!lastNameValid) {
+        //     lastNameInput.classList.add('error');
+        //     lastNameInput.classList.remove('valid');
+        //     $(lastNameError).fadeIn(300);
+        //     hideErrorMessageAfterDelay(lastNameError);
+        // }
         
-        if (!cardNumberValid) {
-            cardNumberInput.classList.add('error');
-            cardNumberInput.classList.remove('valid');
-            $(cardNumberError).fadeIn(300);
-            hideErrorMessageAfterDelay(cardNumberError);
-        }
+        // if (!cardNumberValid) {
+        //     cardNumberInput.classList.add('error');
+        //     cardNumberInput.classList.remove('valid');
+        //     $(cardNumberError).fadeIn(300);
+        //     hideErrorMessageAfterDelay(cardNumberError);
+        // }
         
-        if (!securityCodeValid) {
-            securityCodeInput.classList.add('error');
-            securityCodeInput.classList.remove('valid');
-            $(cvvError).fadeIn(300);
-            hideErrorMessageAfterDelay(cvvError);
-        }
+        // if (!securityCodeValid) {
+        //     securityCodeInput.classList.add('error');
+        //     securityCodeInput.classList.remove('valid');
+        //     $(cvvError).fadeIn(300);
+        //     hideErrorMessageAfterDelay(cvvError);
+        // }
         
-        if (!expiryMonthValid) {
-            expiryMonthInput.classList.add('error');
-            expiryMonthInput.classList.remove('valid');
-            $(monthError).fadeIn(300);
-            hideErrorMessageAfterDelay(monthError);
-        }
+        // if (!expiryMonthValid) {
+        //     expiryMonthInput.classList.add('error');
+        //     expiryMonthInput.classList.remove('valid');
+        //     $(monthError).fadeIn(300);
+        //     hideErrorMessageAfterDelay(monthError);
+        // }
         
-        if (!expiryYearValid) {
-            expiryYearInput.classList.add('error');
-            expiryYearInput.classList.remove('valid');
-            $(yearError).fadeIn(300);
-            hideErrorMessageAfterDelay(yearError);
-        }
+        // if (!expiryYearValid) {
+        //     expiryYearInput.classList.add('error');
+        //     expiryYearInput.classList.remove('valid');
+        //     $(yearError).fadeIn(300);
+        //     hideErrorMessageAfterDelay(yearError);
+        // }
         
         // If all fields are valid, submit the form
         if (firstNameValid && lastNameValid && cardNumberValid && securityCodeValid && expiryMonthValid && expiryYearValid) {

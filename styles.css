@@ -192,7 +192,6 @@ body {
     color: #e53935;
     font-size: 16px;
     text-align: center;
-    margin-bottom: 5px;
 }
 
 .error-message:last-child {
@@ -200,7 +199,6 @@ body {
 }
 
 .form-group {
-    margin-bottom: 30px; /* Added more space between form groups */
     position: relative;
     padding: 10px 0; /* Added padding top and bottom */
 }
@@ -208,16 +206,20 @@ body {
 /* Error message popup styling */
 .error-message-popup {
     position: absolute;
-    top: -33px;
+    top: -31px;
     left: 0;
     background-color: #e53935;
     color: white;
     text-align: center;
     padding: 4px 8px;
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 14px;
     z-index: 5;
     width: 100%;
+}
+
+.input-wrapper .error-message-popup {
+    top: -40px;
 }
 
 .error-message-popup::after {
@@ -326,7 +328,7 @@ select {
 .form-row {
     display: flex;
     gap: 0.5rem;
-    margin-top: 20px;
+    margin-top: 2rem;
 }
 
 .expiry {
@@ -350,8 +352,8 @@ select {
 .subscription-option {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 15px;
+    padding-top: 1.5rem;
 }
 
 input[type="checkbox"] {
@@ -368,7 +370,9 @@ input[type="checkbox"] {
 }
 
 .terms-agreement {
-    font-size: 12px;
+    font-size: 0.7rem !important;
+    font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 20px;
     color: #666;
 }
@@ -409,6 +413,7 @@ input[type="checkbox"] {
     line-height: 1.2;
     color: rgb(147, 147, 147);
     text-align: justify;
+    padding-top: 3rem;
 }
 
 .footer {
