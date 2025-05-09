@@ -62,70 +62,67 @@
             </div>
 
             <form id="payment-form">
-                <div class="form-group">
-                    <label for="fname">Name on the card</label>
+                <!-- Name fields with structure matching reference -->
+                <div class="form-group name-group" style="position: relative;">
+                    <div id="fnameLabel" style="position: absolute; top: -1.6rem; left: 0px; color: rgb(0, 0, 0); font-size: 1rem; font-weight: 500;">Name on the card</div>
                     <div class="name-inputs">
-                        <div class="input-container">
-                            <div class="mandatory-message" style="display: none;">This is mandatory</div>
-                            <input type="text" id="fname" placeholder="First name">
-                            <span class="valid-icon" style="display: none;">✓</span>
-                            <span class="invalid-icon" style="display: none;">⚠</span>
+                        <div class="input-wrapper">
+                            <input type="text" id="fname" placeholder="First name" class="name-input">
+                            <span id="fname-error" class="error-message-popup" style="display: none;">This is mandatory</span>
                         </div>
-                        <div class="input-container">
-                            <div class="mandatory-message" style="display: none;">This is mandatory</div>
-                            <input type="text" id="lname" placeholder="Last name">
-                            <span class="valid-icon" style="display: none;">✓</span>
-                            <span class="invalid-icon" style="display: none;">⚠</span>
+                        <div class="input-wrapper">
+                            <input type="text" id="lname" placeholder="Last name" class="name-input">
+                            <span id="lname-error" class="error-message-popup" style="display: none;">This is mandatory</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="rg_Cardno">Card number</label>
-                    <div class="card-number-container">
-                        <div class="mandatory-message" style="display: none;">Invalid card number</div>
+                <div class="form-group" style="position: relative; margin-top: 30px;">
+                    <div id="cardnoLabelElement" style="position: absolute; top: -1.6rem; left: 0px; color: rgb(0, 0, 0); font-size: 1rem; font-weight: 500;">Card number</div>
+                    <div class="field-container">
                         <input type="text" id="rg_Cardno" placeholder="Your card number">
+                        <span id="cardno-error" class="error-message-popup" style="display: none;">Invalid card number</span>
                         <div class="card-icons"></div>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group expiry">
-                        <label for="expiryMonth">Expiry month</label>
-                        <div class="select-container">
-                            <div class="mandatory-message" style="display: none;">Invalid</div>
+                    <div class="form-group expiry" style="position: relative;">
+                        <div id="expireMonthElement" style="position: absolute; top: -1.6rem; left: 0px; color: rgb(0, 0, 0); font-size: 1rem; font-weight: 500;">Expiry month</div>
+                        <div class="field-container">
                             <select id="expiryMonth">
                                 <option value="">MM</option>
-                                <option value="01">01-Jan</option>
-                                <option value="02">02-Feb</option>
-                                <option value="03">03-Mar</option>
-                                <option value="04">04-Apr</option>
-                                <option value="05">05-May</option>
-                                <option value="06">06-Jun</option>
-                                <option value="07">07-Jul</option>
-                                <option value="08">08-Aug</option>
-                                <option value="09">09-Sep</option>
-                                <option value="10">10-Oct</option>
-                                <option value="11">11-Nov</option>
-                                <option value="12">12-Dec</option>
+                                <option value="01">01 - Jan</option>
+                                <option value="02">02 - Feb</option>
+                                <option value="03">03 - Mar</option>
+                                <option value="04">04 - Apr</option>
+                                <option value="05">05 - May</option>
+                                <option value="06">06 - Jun</option>
+                                <option value="07">07 - Jul</option>
+                                <option value="08">08 - Aug</option>
+                                <option value="09">09 - Sep</option>
+                                <option value="10">10 - Oct</option>
+                                <option value="11">11 - Nov</option>
+                                <option value="12">12 - Dec</option>
                             </select>
+                            <span id="month-error" class="error-message-popup" style="display: none;">Invalid</span>
                         </div>
                     </div>
-                    <div class="form-group expiry">
-                        <label for="expiryYear">Expiry year</label>
-                        <div class="select-container">
-                            <div class="mandatory-message" style="display: none;">Invalid</div>
+                    <div class="form-group expiry" style="position: relative;">
+                        <div id="expireYearElement" style="position: absolute; top: -1.6rem; left: 0px; color: rgb(0, 0, 0); font-size: 1rem; font-weight: 500;">Expiry year</div>
+                        <div class="field-container">
                             <select id="expiryYear">
                                 <option value="">YYYY</option>
                                 <!-- Years will be added dynamically via JavaScript -->
                             </select>
+                            <span id="year-error" class="error-message-popup" style="display: none;">Invalid</span>
                         </div>
                     </div>
-                    <div class="form-group security">
-                        <label for="cvv">Security code</label>
-                        <div class="security-code-container">
-                            <div class="mandatory-message" style="display: none;">Invalid</div>
+                    <div class="form-group security" style="position: relative;">
+                        <div id="securityCodeText" style="position: absolute; top: -1.6rem; left: 0px; color: rgb(0, 0, 0); font-size: 1rem; font-weight: 500;">Security code</div>
+                        <div class="field-container">
                             <input type="text" id="cvv" placeholder="3-4 digits">
+                            <span id="cvv-error" class="error-message-popup" style="display: none;">Invalid</span>
                             <img src="https://lpbp.cloudassets.link/billing/assets/information.png" alt="Info" class="info-icon">
                         </div>
                     </div>

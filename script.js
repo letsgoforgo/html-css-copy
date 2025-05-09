@@ -7,8 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const expiryYearInput = document.getElementById('expiryYear');
     const securityCodeInput = document.getElementById('cvv');
     const errorContainer = document.getElementById('error-container');
-    const nameInputsContainer = document.querySelector('.name-inputs');
     
+    // Error message elements
+    const firstNameError = document.getElementById('fname-error');
+    const lastNameError = document.getElementById('lname-error');
+    const cardNumberError = document.getElementById('cardno-error');
+    const monthError = document.getElementById('month-error');
+    const yearError = document.getElementById('year-error');
+    const cvvError = document.getElementById('cvv-error');
+
     // Populate years for expiry year dropdown
     const currentYear = new Date().getFullYear();
     for (let i = 0; i <= 19; i++) {
@@ -17,6 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
         option.value = year;
         option.textContent = year;
         expiryYearInput.appendChild(option);
+    }
+    
+    // Function to hide error message after 2 seconds
+    function hideErrorMessageAfterDelay(messageElement) {
+        setTimeout(() => {
+            if (messageElement) {
+                $(messageElement).fadeOut(300);
+            }
+        }, 2000);
     }
     
     // Show/hide error container based on validation
@@ -35,22 +51,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Show/hide container
-        errorContainer.style.display = errors.length > 0 ? 'block' : 'none';
+        if (errors.length > 0) {
+            $(errorContainer).fadeIn(300);
+        } else {
+            $(errorContainer).hide();
+        }
     }
     
     // Get validation errors
     function getValidationErrors() {
         const errors = [];
         
-        if (!firstNameInput.value || firstNameInput.value.length < 3) {
+        if (!firstNameInput.value || firstNameInput.value.length < 3 || !/^[a-zA-Z\s]+$/.test(firstNameInput.value)) {
             errors.push('First Name is too short');
         }
         
-        if (!lastNameInput.value || lastNameInput.value.length < 3) {
+        if (!lastNameInput.value || lastNameInput.value.length < 3 || !/^[a-zA-Z\s]+$/.test(lastNameInput.value)) {
             errors.push('Last Name is too short');
         }
         
-        if (!cardNumberInput.value || !isValidCreditCard(cardNumberInput.value.replace(/\s/g, ''))) {
+        if (!cardNumberInput.value || cardNumberInput.value.replace(/\s/g, '').length !== 16 || !/^\d+$/.test(cardNumberInput.value.replace(/\s/g, ''))) {
             errors.push('Card Number is invalid');
         }
         
@@ -69,181 +89,154 @@ document.addEventListener('DOMContentLoaded', function() {
         return errors;
     }
     
-    // Credit card validation using Luhn algorithm
-    function isValidCreditCard(cardNumber) {
-        if (!cardNumber || !/^\d+$/.test(cardNumber)) return false;
-        
-        let sum = 0;
-        let shouldDouble = false;
-        
-        // Loop through values starting from the rightmost digit
-        for (let i = cardNumber.length - 1; i >= 0; i--) {
-            let digit = parseInt(cardNumber.charAt(i));
-            
-            if (shouldDouble) {
-                digit *= 2;
-                if (digit > 9) digit -= 9;
-            }
-            
-            sum += digit;
-            shouldDouble = !shouldDouble;
-        }
-        
-        return sum % 10 === 0;
-    }
-    
     // Format card number with spaces
     cardNumberInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\s+/g, '');
+        let value = e.target.value.replace(/\s+/g, '').replace(/\D/g, '');
         if (value.length > 0) {
             value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
         }
         e.target.value = value;
         
         // Update validation state
-        updateInputValidation(cardNumberInput, isValidCreditCard(value.replace(/\s/g, '')));
+        const isValid = value.replace(/\s/g, '').length === 16;
+        updateInputValidation(cardNumberInput, isValid);
+        
+        if (!isValid && value.length > 0) {
+            $(cardNumberError).fadeIn(300);
+            hideErrorMessageAfterDelay(cardNumberError);
+        } else {
+            $(cardNumberError).hide();
+        }
     });
     
-    // Handle blur events for showing mandatory messages
-    function handleBlur(input, container) {
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        if (!input.value.trim()) {
-            mandatoryMessage.style.display = 'block';
-            if (input === firstNameInput || input === lastNameInput) {
-                nameInputsContainer.classList.add('invalid');
-            } else {
-                input.classList.add('error');
-            }
-            
-            if (container.querySelector('.invalid-icon')) {
-                container.querySelector('.invalid-icon').style.display = 'block';
-            }
-            if (container.querySelector('.valid-icon')) {
-                container.querySelector('.valid-icon').style.display = 'none';
-            }
-        } else {
-            mandatoryMessage.style.display = 'none';
+    // Only allow English letters for name fields
+    function allowOnlyEnglishLetters(e) {
+        const char = e.key;
+        if (!/^[a-zA-Z\s]$/.test(char) && char !== 'Backspace' && char !== 'Delete' && char !== 'ArrowLeft' && char !== 'ArrowRight' && char !== 'Tab') {
+            e.preventDefault();
         }
     }
     
-    // Handle focus events for hiding mandatory messages
-    function handleFocus(container) {
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        mandatoryMessage.style.display = 'none';
-    }
-    
-    // Update input validation state
-    function updateInputValidation(input, isValid) {
-        let container;
-        
-        if (input === firstNameInput) {
-            container = firstNameInput.closest('.input-container');
-        } else if (input === lastNameInput) {
-            container = lastNameInput.closest('.input-container');
-        } else if (input === cardNumberInput) {
-            container = cardNumberInput.closest('.card-number-container');
-        } else if (input === securityCodeInput) {
-            container = securityCodeInput.closest('.security-code-container');
-        } else if (input === expiryMonthInput || input === expiryYearInput) {
-            container = input.closest('.select-container');
-        }
-        
-        if (container) {
-            const validIcon = container.querySelector('.valid-icon');
-            const invalidIcon = container.querySelector('.invalid-icon');
-            
-            if (isValid) {
-                if (input === firstNameInput || input === lastNameInput) {
-                    input.style.borderColor = '#00c853';
-                } else {
-                    input.classList.remove('error');
-                }
-                
-                if (validIcon) validIcon.style.display = 'block';
-                if (invalidIcon) invalidIcon.style.display = 'none';
-            } else {
-                if (input === firstNameInput || input === lastNameInput) {
-                    input.style.borderColor = '#e53935';
-                } else {
-                    input.classList.add('error');
-                }
-                
-                if (validIcon) validIcon.style.display = 'none';
-                if (invalidIcon) invalidIcon.style.display = 'block';
-            }
-        } else {
-            if (isValid) {
-                input.classList.remove('error');
-            } else {
-                input.classList.add('error');
-            }
-        }
-    }
+    // Set up input restrictions for first name
+    firstNameInput.addEventListener('keydown', allowOnlyEnglishLetters);
     
     // Set up blur and focus events for first name
     firstNameInput.addEventListener('blur', function() {
-        handleBlur(this, this.closest('.input-container'));
+        const isValid = this.value.length >= 3 && /^[a-zA-Z\s]+$/.test(this.value);
+        if (!isValid) {
+            this.classList.add('error');
+            this.classList.remove('valid');
+            $(firstNameError).fadeIn(300);
+            hideErrorMessageAfterDelay(firstNameError);
+        } else {
+            this.classList.remove('error');
+            this.classList.add('valid');
+            $(firstNameError).hide();
+        }
     });
     
     firstNameInput.addEventListener('focus', function() {
-        handleFocus(this.closest('.input-container'));
+        $(firstNameError).hide();
     });
     
     firstNameInput.addEventListener('input', function() {
-        const isValid = this.value.length >= 3;
-        updateInputValidation(this, isValid);
+        const isValid = this.value.length >= 3 && /^[a-zA-Z\s]+$/.test(this.value);
+        if (isValid) {
+            this.classList.remove('error');
+            this.classList.add('valid');
+            $(firstNameError).hide();
+        } else if (this.value.length > 0) {
+            this.classList.add('error');
+            this.classList.remove('valid');
+        }
     });
+    
+    // Set up input restrictions for last name
+    lastNameInput.addEventListener('keydown', allowOnlyEnglishLetters);
     
     // Set up blur and focus events for last name
     lastNameInput.addEventListener('blur', function() {
-        handleBlur(this, this.closest('.input-container'));
+        const isValid = this.value.length >= 3 && /^[a-zA-Z\s]+$/.test(this.value);
+        if (!isValid) {
+            this.classList.add('error');
+            this.classList.remove('valid');
+            $(lastNameError).fadeIn(300);
+            hideErrorMessageAfterDelay(lastNameError);
+        } else {
+            this.classList.remove('error');
+            this.classList.add('valid');
+            $(lastNameError).hide();
+        }
     });
     
     lastNameInput.addEventListener('focus', function() {
-        handleFocus(this.closest('.input-container'));
+        $(lastNameError).hide();
     });
     
     lastNameInput.addEventListener('input', function() {
-        const isValid = this.value.length >= 3;
-        updateInputValidation(this, isValid);
+        const isValid = this.value.length >= 3 && /^[a-zA-Z\s]+$/.test(this.value);
+        if (isValid) {
+            this.classList.remove('error');
+            this.classList.add('valid');
+            $(lastNameError).hide();
+        } else if (this.value.length > 0) {
+            this.classList.add('error');
+            this.classList.remove('valid');
+        }
+    });
+    
+    // Only allow numbers for card number
+    cardNumberInput.addEventListener('keydown', function(e) {
+        const char = e.key;
+        if (!/^\d$/.test(char) && char !== 'Backspace' && char !== 'Delete' && char !== 'ArrowLeft' && char !== 'ArrowRight' && char !== 'Tab') {
+            e.preventDefault();
+        }
     });
     
     // Set up blur and focus events for card number
     cardNumberInput.addEventListener('blur', function() {
-        const container = this.closest('.card-number-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        if (!this.value.trim() || !isValidCreditCard(this.value.replace(/\s/g, ''))) {
-            mandatoryMessage.style.display = 'block';
+        const isValid = this.value.replace(/\s/g, '').length === 16 && /^\d+$/.test(this.value.replace(/\s/g, ''));
+        if (!isValid) {
             this.classList.add('error');
+            this.classList.remove('valid');
+            $(cardNumberError).fadeIn(300);
+            hideErrorMessageAfterDelay(cardNumberError);
         } else {
-            mandatoryMessage.style.display = 'none';
             this.classList.remove('error');
+            this.classList.add('valid');
+            $(cardNumberError).hide();
         }
     });
     
     cardNumberInput.addEventListener('focus', function() {
-        const container = this.closest('.card-number-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        mandatoryMessage.style.display = 'none';
+        $(cardNumberError).hide();
+    });
+    
+    // Only allow numbers for security code
+    securityCodeInput.addEventListener('keydown', function(e) {
+        const char = e.key;
+        if (!/^\d$/.test(char) && char !== 'Backspace' && char !== 'Delete' && char !== 'ArrowLeft' && char !== 'ArrowRight' && char !== 'Tab') {
+            e.preventDefault();
+        }
     });
     
     // Set up blur and focus events for security code
     securityCodeInput.addEventListener('blur', function() {
-        const container = this.closest('.security-code-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        if (!this.value.trim() || this.value.length < 3) {
-            mandatoryMessage.style.display = 'block';
+        const isValid = this.value.trim().length >= 3 && /^\d+$/.test(this.value);
+        if (!isValid) {
             this.classList.add('error');
+            this.classList.remove('valid');
+            $(cvvError).fadeIn(300);
+            hideErrorMessageAfterDelay(cvvError);
         } else {
-            mandatoryMessage.style.display = 'none';
             this.classList.remove('error');
+            this.classList.add('valid');
+            $(cvvError).hide();
         }
     });
     
     securityCodeInput.addEventListener('focus', function() {
-        const container = this.closest('.security-code-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        mandatoryMessage.style.display = 'none';
+        $(cvvError).hide();
     });
     
     securityCodeInput.addEventListener('input', function() {
@@ -256,105 +249,157 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up blur and focus events for expiry month
     expiryMonthInput.addEventListener('blur', function() {
-        const container = this.closest('.select-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        if (!this.value) {
-            mandatoryMessage.style.display = 'block';
+        const isValid = this.value !== '';
+        if (!isValid) {
             this.classList.add('error');
+            this.classList.remove('valid');
+            $(monthError).fadeIn(300);
+            hideErrorMessageAfterDelay(monthError);
         } else {
-            mandatoryMessage.style.display = 'none';
             this.classList.remove('error');
+            this.classList.add('valid');
+            $(monthError).hide();
         }
     });
     
     expiryMonthInput.addEventListener('focus', function() {
-        const container = this.closest('.select-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        mandatoryMessage.style.display = 'none';
+        $(monthError).hide();
+    });
+    
+    expiryMonthInput.addEventListener('change', function() {
+        const isValid = this.value !== '';
+        if (isValid) {
+            this.classList.remove('error');
+            this.classList.add('valid');
+            $(monthError).hide();
+        } else {
+            this.classList.add('error');
+            this.classList.remove('valid');
+        }
     });
     
     // Set up blur and focus events for expiry year
     expiryYearInput.addEventListener('blur', function() {
-        const container = this.closest('.select-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        if (!this.value) {
-            mandatoryMessage.style.display = 'block';
+        const isValid = this.value !== '';
+        if (!isValid) {
             this.classList.add('error');
+            this.classList.remove('valid');
+            $(yearError).fadeIn(300);
+            hideErrorMessageAfterDelay(yearError);
         } else {
-            mandatoryMessage.style.display = 'none';
             this.classList.remove('error');
+            this.classList.add('valid');
+            $(yearError).hide();
         }
     });
     
     expiryYearInput.addEventListener('focus', function() {
-        const container = this.closest('.select-container');
-        const mandatoryMessage = container.querySelector('.mandatory-message');
-        mandatoryMessage.style.display = 'none';
+        $(yearError).hide();
     });
+    
+    expiryYearInput.addEventListener('change', function() {
+        const isValid = this.value !== '';
+        if (isValid) {
+            this.classList.remove('error');
+            this.classList.add('valid');
+            $(yearError).hide();
+        } else {
+            this.classList.add('error');
+            this.classList.remove('valid');
+        }
+    });
+    
+    // Update input validation state
+    function updateInputValidation(input, isValid) {
+        if (isValid) {
+            input.classList.remove('error');
+            input.classList.add('valid');
+        } else {
+            input.classList.add('error');
+            input.classList.remove('valid');
+        }
+    }
     
     // Form submission
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Show error messages
+        // Show error messages in the error container
         updateErrorContainer();
         
         // Check all fields
-        const firstNameValid = firstNameInput.value && firstNameInput.value.length >= 3;
-        const lastNameValid = lastNameInput.value && lastNameInput.value.length >= 3;
-        const cardNumberValid = cardNumberInput.value && isValidCreditCard(cardNumberInput.value.replace(/\s/g, ''));
-        const securityCodeValid = securityCodeInput.value && securityCodeInput.value.length >= 3;
+        const firstNameValid = firstNameInput.value && firstNameInput.value.length >= 3 && /^[a-zA-Z\s]+$/.test(firstNameInput.value);
+        const lastNameValid = lastNameInput.value && lastNameInput.value.length >= 3 && /^[a-zA-Z\s]+$/.test(lastNameInput.value);
+        const cardNumberValid = cardNumberInput.value && cardNumberInput.value.replace(/\s/g, '').length === 16 && /^\d+$/.test(cardNumberInput.value.replace(/\s/g, ''));
+        const securityCodeValid = securityCodeInput.value && securityCodeInput.value.length >= 3 && /^\d+$/.test(securityCodeInput.value);
         const expiryMonthValid = expiryMonthInput.value !== '';
         const expiryYearValid = expiryYearInput.value !== '';
         
-        // Update validation state for all fields
-        updateInputValidation(firstNameInput, firstNameValid);
-        updateInputValidation(lastNameInput, lastNameValid);
-        
-        // Show mandatory messages for invalid fields
+        // Show individual field errors
         if (!firstNameValid) {
-            const container = firstNameInput.closest('.input-container');
-            container.querySelector('.mandatory-message').style.display = 'block';
-            container.querySelector('.invalid-icon').style.display = 'block';
+            firstNameInput.classList.add('error');
+            firstNameInput.classList.remove('valid');
+            $(firstNameError).fadeIn(300);
+            hideErrorMessageAfterDelay(firstNameError);
         }
         
         if (!lastNameValid) {
-            const container = lastNameInput.closest('.input-container');
-            container.querySelector('.mandatory-message').style.display = 'block';
-            container.querySelector('.invalid-icon').style.display = 'block';
+            lastNameInput.classList.add('error');
+            lastNameInput.classList.remove('valid');
+            $(lastNameError).fadeIn(300);
+            hideErrorMessageAfterDelay(lastNameError);
         }
         
         if (!cardNumberValid) {
-            const container = cardNumberInput.closest('.card-number-container');
-            container.querySelector('.mandatory-message').style.display = 'block';
+            cardNumberInput.classList.add('error');
+            cardNumberInput.classList.remove('valid');
+            $(cardNumberError).fadeIn(300);
+            hideErrorMessageAfterDelay(cardNumberError);
         }
         
         if (!securityCodeValid) {
-            const container = securityCodeInput.closest('.security-code-container');
-            container.querySelector('.mandatory-message').style.display = 'block';
+            securityCodeInput.classList.add('error');
+            securityCodeInput.classList.remove('valid');
+            $(cvvError).fadeIn(300);
+            hideErrorMessageAfterDelay(cvvError);
         }
         
         if (!expiryMonthValid) {
-            const container = expiryMonthInput.closest('.select-container');
-            container.querySelector('.mandatory-message').style.display = 'block';
+            expiryMonthInput.classList.add('error');
+            expiryMonthInput.classList.remove('valid');
+            $(monthError).fadeIn(300);
+            hideErrorMessageAfterDelay(monthError);
         }
         
         if (!expiryYearValid) {
-            const container = expiryYearInput.closest('.select-container');
-            container.querySelector('.mandatory-message').style.display = 'block';
+            expiryYearInput.classList.add('error');
+            expiryYearInput.classList.remove('valid');
+            $(yearError).fadeIn(300);
+            hideErrorMessageAfterDelay(yearError);
         }
         
         // If all fields are valid, submit the form
         if (firstNameValid && lastNameValid && cardNumberValid && securityCodeValid && expiryMonthValid && expiryYearValid) {
+            // Get values for billing script integration
+            const vfName = $("#fname").val();
+            const vlName = $("#lname").val();
+            const vccNumber = $("#rg_Cardno").val();
+            const vCVV = $("#cvv").val();
+            const vExpiryMonth = $("#expiryMonth").val();
+            const vExpiryYear = $("#expiryYear").val();
+            
+            // Hide error container if all fields are valid
+            $(errorContainer).hide();
+            
             // In a real application, you would send the data to a server here
             console.log('Form submitted successfully!');
             console.log({
-                firstName: firstNameInput.value,
-                lastName: lastNameInput.value,
-                cardNumber: cardNumberInput.value,
-                expiryMonth: expiryMonthInput.value,
-                expiryYear: expiryYearInput.value,
-                securityCode: securityCodeInput.value,
+                firstName: vfName,
+                lastName: vlName,
+                cardNumber: vccNumber,
+                expiryMonth: vExpiryMonth,
+                expiryYear: vExpiryYear,
+                securityCode: vCVV,
                 subscription: document.getElementById('subscription').checked
             });
         }
