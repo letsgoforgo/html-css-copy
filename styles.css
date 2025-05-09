@@ -7,126 +7,287 @@
 
 body {
     background-color: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    padding: 20px;
 }
 
 .container {
+    --max-width: 600px;
+    --padding: 1rem;
+    width: min(var(--max-width), calc(100% - var(--padding) * 2));
+    margin-inline: auto;
+}
+
+.header-background {
+    background-color: rgb(255, 255, 255);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0rem 0px 8rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    z-index: 1;
+    position: relative;
+    background-image: url(https://landing-billing-page.s3.eu-west-1.amazonaws.com/billing/assets/background-header.png);
     width: 100%;
-    max-width: 600px;
+}
+
+.header-wrapper {
+    --max-width: 600px;
+    --padding: 1rem;
+    width: min(var(--max-width), calc(100% - var(--padding) * 2));
+    margin-inline: auto;
+    padding-top: 20px;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
 }
 
 .payment-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 0.5rem;
+    margin-top: -5rem;
+    position: relative;
+    z-index: 1;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     padding: 30px;
-}
-
-.security-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-bottom: 20px;
 }
 
-.lock-icon {
-    margin-right: 8px;
-    font-size: 18px;
+.secure-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    background-color: rgb(248, 250, 251);
+    padding: 15px;
+    margin: -30px -30px 30px -30px;
+    border-radius: 10px 10px 0 0;
+    min-height: 80px;
 }
 
-.security-text {
-    font-weight: bold;
+.secure-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.secure-text {
+    font-weight: normal;
     font-size: 16px;
 }
 
-.activation-box {
+/* Activation section styles */
+.activation-container {
     border: 1px solid #00c853;
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 3rem;
 }
 
 .activation-header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    gap: 1rem;
 }
 
-.activation-header h2 {
-    font-size: 22px;
-    font-weight: bold;
+.activation-account {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.price {
+.activation-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.activation-price {
     color: #00c853;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 1.7rem;
+    font-weight: 700;
 }
 
 .activation-info {
-    margin-bottom: 15px;
-    font-size: 14px;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    color: rgb(42, 42, 42);
+    margin-top: -0.8rem;
+    width: 100%;
 }
 
-.benefits {
+.benefits-container {
     display: flex;
     align-items: flex-start;
+    gap: 0.8rem;
 }
 
-.benefit-icons {
+.benefits-icons-wrapper {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
+    gap: 0.2rem;
+}
+
+.benefits-icons-row {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.benefit-icon-container {
+    flex: 1 1 0%;
+    border-radius: 0.2rem;
+    background-color: rgb(11, 200, 109);
+    padding: 0.2rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .benefit-icon {
-    color: #00c853;
-    font-size: 14px;
-    margin-bottom: 2px;
+    width: 12px;
+    height: auto;
 }
 
-.benefit-text {
-    font-size: 14px;
+.benefits-text {
     flex: 1;
+    font-size: 1rem;
+    line-height: 1.3;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
 }
 
 .divider {
     height: 1px;
     background-color: #e0e0e0;
-    margin: 20px 0;
+    margin: 30px 0;
+}
+
+.error-container {
+    background-color: #ffebee;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    color: #e53935;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.error-message:last-child {
+    margin-bottom: 0;
 }
 
 .form-group {
     margin-bottom: 20px;
+    position: relative;
 }
 
 label {
     display: block;
     font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 14px;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 .name-inputs {
     display: flex;
-    gap: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
-.name-inputs input {
+.input-container {
+    position: relative;
     flex: 1;
+}
+
+.input-container:first-child {
+    border-right: 1px solid #ddd;
+}
+
+.mandatory-message {
+    position: absolute;
+    top: -33px;
+    background-color: #e53935;
+    color: white;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 5;
+    width: 100%;
+}
+
+.mandatory-message::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #e53935;
+}
+
+.valid-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #00c853;
+    font-weight: bold;
+}
+
+.invalid-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e53935;
+}
+
+.select-container {
+    position: relative;
+}
+
+input[type="text"], select {
+    border-width: 1px;
+    border-radius: 0.5rem;
+    border-style: solid;
+    width: 100%;
+    height: 45px;
+    padding: 1px 10px 0px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    color: rgb(117, 117, 117);
+    background-color: rgb(246, 248, 250);
+    box-sizing: border-box;
+    box-shadow: none;
+    text-shadow: none;
+    opacity: 1;
+}
+
+.name-inputs input[type="text"] {
+    border: none;
+    border-radius: 0;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .card-number-container {
@@ -138,20 +299,12 @@ input[type="text"] {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    display: flex;
-}
-
-.card-icon {
-    height: 24px;
-    margin-left: 5px;
-}
-
-.visa {
-    content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgMzc5Ij48cGF0aCBmaWxsPSIjMDAyNzlBIiBkPSJNNDc2LjQgMTEzLjVIMzc0LjFsLTY0IDIwMy4xaDEwMi4zeiIvPjxwYXRoIGZpbGw9IiMwMDI3OUEiIGQ9Ik0zMTAuMSAxMTMuNWgtOTcuNEwxNzUuNSAyNTRsMTMuOC02Ni4xLTMyLjctNzQuNGgtODMuM2wxMDIuMyAyMDMuMWgxMDIuM3oiLz48cGF0aCBmaWxsPSIjRkZBMDAwIiBkPSJNNDgzLjQgMjA0LjFjMC03OS4xLTEwOC4xLTgzLjgtMTA3LjctMTE5LjQgMC0xMC44IDEwLjQtMjIuMyAzMi43LTI1LjIgMTEuMS0xLjUgNDEuNS0yLjYgNzYuMSAxMy40bDEzLjUtNjMuMmMtMTguNi02LjctNDIuNS0xMy4xLTcyLjItMTMuMWgtMi4yYy03Ni4zIDAtMTMwIDQwLjUtMTMwLjQgOTguNi0uNCA0Mi45IDM4LjQgNjYuOSA2Ny43IDgxLjIgMzAuMiAxNC42IDQwLjMgMjQgNDAuMSAzNy0uMyAxOS45LTI0IDI4LjctNDYuMiAyOS0zOC44LjctNjEuMy0xMC40LTc5LjQtMTguN2wtMTQgNjUuNWMxOC4xIDguMyA1MS41IDE1LjUgODYuMiAxNS45IDgxLjQgMCAxMzQuNy00MC4xIDEzNS4xLTEwMiIvPjwvc3ZnPg==');
-}
-
-.mastercard {
-    content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDQgMzA0Ij48cGF0aCBmaWxsPSIjRkY1RjAwIiBkPSJNMTgzIDEzaDEzOHYyNzhIMTgzeiIvPjxwYXRoIGZpbGw9IiNFQjAwMUIiIGQ9Ik0xOTcgMTUyYzAtNTMgMjUtMTAwIDYzLTEzMC04LTYtMTYtMTItMjUtMTdDMTg2LTIwIDEyOSAxNSAxMDQgNjVjLTI1IDUxLTQgMTEyIDQ3IDEzNyA1MSAyNSAxMTIgNCA1MjctNDcgOS01IDE3LTExIDI1LTE3LTM4LTMwLTYzLTc3LTYzLTEzMHoiLz48cGF0aCBmaWxsPSIjRjc5RTFCIiBkPSJNNDUwIDE1MmMwIDc1LTYxIDEzNi0xMzYgMTM2LTM3IDAtNzEtMTUtOTUtNDAgMzgtMzAgNjMtNzcgNjMtMTMwUzI1NyA4OSAyMTkgNThjMjQtMjUgNTgtNDAgOTUtNDAgNzUgMCAxMzYgNjEgMTM2IDEzNnoiLz48L3N2Zz4=');
+    width: 150px;
+    height: 50px;
+    background-image: url("https://lpbp.cloudassets.link/billing/assets/payment-cards/europe-cards.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right center;
 }
 
 .form-row {
@@ -176,82 +329,147 @@ input[type="text"] {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #757575;
-    font-size: 18px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 
 .subscription-option {
     display: flex;
+    align-items: flex-start;
     margin-bottom: 20px;
 }
 
-#subscription {
+input[type="checkbox"] {
     margin-right: 10px;
     margin-top: 3px;
 }
 
 .subscription-text {
-    font-size: 12px;
-    line-height: 1.5;
-    color: #555;
+    display: block;
+    font-weight: 400;
+    line-height: 1.2;
+    color: rgb(147, 147, 147);
+    font-size: 0.7rem !important;
 }
 
 .terms-agreement {
     font-size: 12px;
     margin-bottom: 20px;
-    line-height: 1.5;
+    color: #666;
 }
 
 .terms-link, .privacy-link {
-    color: #000;
+    color: #1976d2;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .continue-btn {
+    height: 60px;
     width: 100%;
-    background-color: #00c853;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: bold;
+    background: url(https://landing-billing-page.s3.eu-west-1.amazonaws.com/billing/assets/chevron-right.png) right 1rem center / 35px no-repeat rgb(11, 200, 109);
+    box-shadow: rgba(11, 200, 109, 0.35) 0px 10px 30px 0px;
+    border-radius: 0.5rem;
+    letter-spacing: 0px;
+    font-size: 1.3rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-transform: uppercase;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    font-weight: 600;
+    border: none;
+    margin-bottom: 20px;
 }
 
-.arrow {
-    position: absolute;
-    right: 20px;
-    font-size: 24px;
-    font-weight: bold;
+.continue-btn:hover {
+    background-color: rgb(10, 180, 98);
+    background-image: url(https://landing-billing-page.s3.eu-west-1.amazonaws.com/billing/assets/chevron-right.png);
+    background-position: right 1rem center;
+    background-repeat: no-repeat;
+    background-size: 35px;
 }
 
 .disclaimer {
-    margin-top: 20px;
-    font-size: 11px;
-    color: #757575;
-    line-height: 1.5;
+    font-size: 0.7rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: rgb(147, 147, 147);
+    text-align: justify;
 }
 
-.error {
-    border-color: #e53935 !important;
-    background-color: #ffebee;
+.footer {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 2rem 0px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    --max-width: 600px;
+    --padding: 1rem;
+    width: min(var(--max-width), calc(100% - var(--padding) * 2));
+    margin-inline: auto;
 }
 
-/* Add hover effect for the continue button */
-.continue-btn:hover {
-    background-color: #00b34a;
+.footer-wrapper {
+    width: 100%;
+    text-align: center;
 }
 
-/* Add focus styles for inputs */
-input:focus {
+.footer-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(151, 151, 151);
+}
+
+/* Error states */
+input.error, select.error {
+    border-color: #e53935;
+}
+
+.name-inputs.invalid {
+    border-color: #e53935;
+}
+
+/* Focus styles */
+input:focus, select:focus {
     outline: none;
     border-color: #2196f3;
     box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .activation-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .activation-price {
+        margin-top: 5px;
+    }
+    
+    .benefits-container {
+        flex-direction: column;
+    }
+    
+    .benefits-icons-wrapper {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .name-inputs {
+        flex-direction: column;
+    }
+    
+    .input-container:first-child {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
 }

