@@ -39,10 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateErrorContainer() {
         const errors = getValidationErrors();
         
-        // Clear previous error messages
         errorContainer.innerHTML = '';
         
-        // Add new error messages
         errors.forEach(error => {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
@@ -50,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
             errorContainer.appendChild(errorDiv);
         });
         
-        // Show/hide container
         if (errors.length > 0) {
             $(errorContainer).fadeIn(300);
         } else {
@@ -97,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         e.target.value = value;
         
-        // Update validation state
         const isValid = value.replace(/\s/g, '').length === 16;
         updateInputValidation(cardNumberInput, isValid);
         
@@ -324,7 +320,6 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Show error messages in the error container
         updateErrorContainer();
         
         // Check all fields
@@ -380,7 +375,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // If all fields are valid, submit the form
         if (firstNameValid && lastNameValid && cardNumberValid && securityCodeValid && expiryMonthValid && expiryYearValid) {
-            // Get values for billing script integration
             const vfName = $("#fname").val();
             const vlName = $("#lname").val();
             const vccNumber = $("#rg_Cardno").val();
@@ -388,10 +382,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const vExpiryMonth = $("#expiryMonth").val();
             const vExpiryYear = $("#expiryYear").val();
             
-            // Hide error container if all fields are valid
             $(errorContainer).hide();
             
-            // In a real application, you would send the data to a server here
             console.log('Form submitted successfully!');
             console.log({
                 firstName: vfName,
