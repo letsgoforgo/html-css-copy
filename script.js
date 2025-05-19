@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const securityCodeInput = document.getElementById('cvv');
     const errorContainer = document.getElementById('error-container');
     
-    // Error message elements
     const firstNameError = document.getElementById('fname-error');
     const lastNameError = document.getElementById('lname-error');
     const cardNumberError = document.getElementById('cardno-error');
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const yearError = document.getElementById('year-error');
     const cvvError = document.getElementById('cvv-error');
 
-    // Populate years for expiry year dropdown
     const currentYear = new Date().getFullYear();
     for (let i = 0; i <= 19; i++) {
         const year = currentYear + i;
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         expiryYearInput.appendChild(option);
     }
     
-    // Function to hide error message after 2 seconds
     function hideErrorMessageAfterDelay(messageElement) {
         setTimeout(() => {
             if (messageElement) {
@@ -35,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     }
     
-    // Show/hide error container based on validation
     function updateErrorContainer() {
         const errors = getValidationErrors();
         
@@ -55,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Get validation errors
     function getValidationErrors() {
         const errors = [];
         
